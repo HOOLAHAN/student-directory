@@ -57,7 +57,7 @@ def group(students)
     end
     students_by_cohort[cohort].push(student[:name])
   end
-  puts students_by_cohort
+# students_by_cohort grouoed using hash
   students_by_cohort.each do |k, v|
     puts k
     puts v
@@ -73,12 +73,7 @@ def print_footer(names)
 end
 
 students = input_students
-
-if !input_students.empty?
-  print_header
-  print(students)
-  print_footer(students)
-  group(students)
-else
-  puts "Empty"
-end
+print_header
+print(students)
+print_footer(students)
+group(students)
