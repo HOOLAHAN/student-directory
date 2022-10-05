@@ -2,13 +2,15 @@ def input_students
   students = []
   puts "Please enter the name of first student"
   name = gets.chomp
-  puts "Please enter the cohort of first student"
-  cohort = gets.chomp
-  puts "Please enter the country of birth of first student"
-  country = gets.chomp
-  puts "Please enter the height of first student (in cm)"
-  height = gets.chomp
-  
+  if !name.empty?
+    puts "Please enter the cohort of first student"
+    cohort = gets.chomp.to_sym
+    puts "Please enter the country of birth of first student"
+    country = gets.chomp.to_sym
+    puts "Please enter the height of first student (in cm)"
+    height = gets.chomp
+  end
+
   while !name.empty? do
     students << {name: name, cohort: cohort, country_of_birth: country, height: height}
     puts "Now we have #{students.count} students"
@@ -20,7 +22,7 @@ def input_students
       puts "Please enter the cohort of next student"
       cohort = gets.chomp.to_sym
       puts "Please enter the country of birth of next student"
-      country = gets.chomp
+      country = gets.chomp.to_sym
       puts "Please enter the height of next student"
       height = gets.chomp
     end
@@ -46,6 +48,22 @@ def print(students)
   end
 end
 
+def group(students)
+  students_by_cohort = {}
+  students.each do |student|
+    cohort = student[:cohort]
+    if students_by_cohort[cohort] == nil
+      students_by_cohort[cohort] = []
+    end
+    students_by_cohort[cohort].push(student[:name])
+  end
+  puts students_by_cohort
+  students_by_cohort.each do |k, v|
+    puts k
+    puts v
+  end
+end
+
 def print_footer(names)
   if names.count == 1
     puts "Overall, we have #{names.count} great student"
@@ -55,6 +73,12 @@ def print_footer(names)
 end
 
 students = input_students
-print_header
-print(students)
-print_footer(students)
+
+if !input_students.empty?
+  print_header
+  print(students)
+  print_footer(students)
+  group(students)
+else
+  puts "Empty"
+end
